@@ -1,6 +1,4 @@
-export function isStrongPassword(password: string) {
-    return password.length >= 6;
-};
+import { isStrongPassword } from '../core/password';
 
 describe('The password strength validator', () => {
     it('considers a password to be strong when all requirements are met', () => {
@@ -10,4 +8,20 @@ describe('The password strength validator', () => {
     it('fails when the password is too short', () => {
         expect(isStrongPassword('1aA_')).toBe(false);
     });
-  });
+
+    it('fails when the password is missing a number', () => {
+        expect(isStrongPassword('abcdABCD_')).toBe(false);
+    });
+
+    it('fails when the password is missing a lowercase', () => {
+        expect(isStrongPassword('1234ABCD_')).toBe(false);
+    });
+
+    it('fails when the password is missing an uppercase', () => {
+        expect(isStrongPassword('1234abcd_')).toBe(false);
+    });
+
+    it('fails when the password is missing an underscore', () => {
+        expect(isStrongPassword('1234abcdABCD')).toBe(false);
+    });
+});
